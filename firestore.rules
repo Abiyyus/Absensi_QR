@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function login() { return request.auth != null; }
+    function isDosen() {
+      return login() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dosen';
+    }
+
+    match /users/{uid} {
+      allow read: if login() && request.auth.uid == uid;
+      allow write: if false;            // dibuat manual lewat Firebase Console
+    }
+
+    match /matkul/{id} {
+      allow read: if login();
+      allow write: if false;            // dikelola lewat Firebase Console
+    }
+
+    match /sesi/{sesiId} {
+      allow read: if login();
+      allow create: if isDosen();
+      // dosen boleh ubah apa saja; mahasiswa hanya boleh menaikkan jumlahHadir
+      allow update: if isDosen() ||
+        (login() && request.resource.data.diff(resource.data)
+                      .affectedKeys().hasOnly(['jumlahHadir']));
+
+      match /kehadiran/{uid} {
+        allow read: if login() && (isDosen() || request.auth.uid == uid);
+        allow create: if login() && request.auth.uid == uid;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

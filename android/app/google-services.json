@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514474980513",
+    "project_id": "absensi-qr-f4cc0",
+    "storage_bucket": "absensi-qr-f4cc0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514474980513:android:c04be38fc4d0c85d7cece0",
+        "android_client_info": {
+          "package_name": "com.absensiqr.absensi_qr_live"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_7BozbEjY9oxrm4DTJGqIqrd-r261m8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
